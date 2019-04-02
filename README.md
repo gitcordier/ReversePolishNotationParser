@@ -26,7 +26,7 @@ test_rpn encloses test_rpn.py, which is a unittest script.
 Two inputs are given: 
 1. input_comfirm.json (in ./inputs): The results to comfirm.
 2. input_refute.json (in ./inputs): The results to refute.
-Those results are intentionally wrong. Any match is then an evidence that the 
+Those values are intentionally wrong. Any match is then an evidence that the 
 implementation is flawed. Moreover, it may reveal where the bug is.
 
 Symmetrically, two outputs are given: 
@@ -36,9 +36,8 @@ not be comfirmed.
 miscomputations.
 
 ## About the math
-Let us stress that constants are indentified with constant (0-ary) operators. 
-This means that whatsoever the parameter(s) b, c, d, … is(are), 
-A(b, c, d, …) = A, provided a constant A.
+Let us stress that numbers are indentified with constant (0-ary) operators. 
+This means that whatsoever a, b, c,… are, a(b, c, …) = a.
 
 In terms of RPN, this means that any list of constants '… Z … C B A' reads off
 'A'.
