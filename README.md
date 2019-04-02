@@ -12,15 +12,15 @@ The algorithm is then iterative, straightforward, and naive:
 There are no stack-like abstractions, nor recursive calls.
 
 Human-readable structures (namely, dictionaries) were preferred. 
-In other words, figures like x[i][1] are discarded in favor of the more self-
-explanatory x[i]['value'].
+In other words, figures like x[i][1] are discarded in favor of the more 
+self-explanatory x[i]['value'].
 
 ## Package Structure
 ### rpn
-The core package is rpn, which encloses the routines script rpn.py.
+The core package is rpn, which encloses the routine script rpn.py.
 When run, main.py loads rpn.py and eventually displays a famous numerical 
-result, computed from RPN expressions (see 
-https://en.wikipedia.org/wiki/Taxicab_number for further reading).
+result, computed from RPN expressions ([further reading here]
+(https://en.wikipedia.org/wiki/Taxicab_number )).
 
 ### test_rpn
 test_rpn encloses test_rpn.py, which is a unittest script.
@@ -31,23 +31,24 @@ Those results are intentionally wrong. Any match is then an evidence that the
 implementation is flawed. Moreover, it may reveal where the bug is.
 
 Symmetrically, two outputs are given: 
-1. putput_comfirm_erros.json (in ./outputs): Keeps track of results that could
+1. putput_comfirm_errors.json (in ./outputs): Keeps track of results that could
 not be comfirmed.
-2. output_refute_erros.json (in ./outputs): Keeps track of various misleadings.
+2. output_refute_erros.json (in ./outputs): Keeps track of various 
+miscomputations.
 
-## Math conventions
+## About the math
 Let us stress that constants are indentified with constant (0-ary) operators. 
-This means that whatsoever the parameter(s) a, b, c, … is(are), 
-C(a, b, c, …) = C, provided a constant C.
+This means that whatsoever the parameter(s) b, c, d, … is(are), 
+A(b, c, d, …) = C, provided a constant A.
 
 In terms of RPN, this means that any list of constants '… Z … C B A' reads off
 'A'.
 
 ## Code conventions
-We wanted the if, elif pattern to emulate the switch one. So, this is why we 
-wrote if, elif, …, elif, else. We believe that repeatedly writing 'else: pass'
-is worth the clarity benefit: Sticking to this convention makes some room for
-debugging and further improvements.
+We wanted the _if_, _elif_ pattern to emulate the switch one. So, this is why we 
+wrote **if**, **elif**, …, **elif**, **else**. We believe that repeatedly 
+writing 'else: pass' is worth the clarity benefit: Sticking to this 
+convention makes some room for debugging and further improvements.
 
 ## TODOS
 Enrich and organize the input json files. For example, enlist expressions and
