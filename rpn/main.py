@@ -9,6 +9,7 @@
 '''
 from rpn import * 
 
+
 __author__      = 'gitcordier'
 __copyright__   = 'XXX'
 __credits__     = ['lF']
@@ -33,7 +34,7 @@ print('Hello World!{}Did you know that {} = {} = {} ?'.format(
 if __name__ == '__main__':
     import timeit
     N = 1000            # Number of iterations
-    M = 1000000        # 10**6. Needed to convers s into µs.
+    M = 1000000        # 10**6. Needed to convert s into µs.
     t = timeit.timeit('test()', setup='from __main__ import test', number = N)
     a = (M * t) / N     # Average time, in µs.
     print('Average computation time: {} µs .'.format(str(round(a, 1))))

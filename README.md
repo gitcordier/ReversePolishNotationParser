@@ -11,7 +11,7 @@ notation.
 The algorithm is then iterative, straightforward, and naive: 
 There are no recurstack-like abstractions, nor recursive calls.
 
-Human-readable structures (namely, dictionary) were preferred. 
+Human-readable structures (namely, dictionaries) were preferred. 
 In other words, figures like x[i][1] are discarded in favor of the more self-
 explanatory x[i]['value'].
 

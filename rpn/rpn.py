@@ -11,6 +11,7 @@ from string import ascii_letters, digits
 
 from rpn    import * 
 
+
 __author__      = 'gitcordier'
 __copyright__   = 'XXX'
 __credits__     = ['lF']
@@ -18,7 +19,6 @@ __license__     = 'Nope'
 __version__     = '0.0.1'
 __email__       = ''
 __status__      = 'Prototype'
-
 
 
 ARITY           = 'arity'
@@ -69,6 +69,7 @@ def get_arity(s, check=True):
         # product).
         else:
             arity = 0
+    
     return arity
     
 def as_dict(s, check=True):
@@ -77,8 +78,8 @@ def as_dict(s, check=True):
         that captures in a human-readable fashion the so provided 
         information. 
     '''
-    arity = get_arity(s, check)
     
+    arity = get_arity(s, check)
     r = {ARITY: arity, VALUE: s}
     
     if arity is 0: #i.e it's a constant.
@@ -89,7 +90,7 @@ def as_dict(s, check=True):
     
     return r
 
-# From now on, the term vector denotes list of dictionaries 
+# From now on, the term vector denotes a list of dictionaries 
 # {arityvalue} (see above).
 
 def compute_zero_ary(x, i):
@@ -106,6 +107,7 @@ def compute_zero_ary(x, i):
         For instance, 2 2 + 3 3 * = 4 9 = 9.
         
     '''
+    
     return x[i-1][VALUE]
     
 def compute_unary(x, i):
@@ -117,8 +119,10 @@ def compute_unary(x, i):
     '''
     
     r = nan
+    
     if x[i][VALUE] == SQRT:
         r = sqrt(x[i-1][VALUE])
+    
     return r
 
 def compute_binary(x, i):
@@ -132,10 +136,11 @@ def compute_binary(x, i):
             x[i-2][value] ** x[i-1][value] 
         
         shall be returned.
-        Bear in mind the terms ordering (by decreasing indexes), 
+        Beware the ordering (by decreasing indexes), 
         since T may be noncommutative (like **).
         
     '''
+    
     r = nan
     a = x[i-2][VALUE]
     b = x[i-1][VALUE]
@@ -165,17 +170,18 @@ def compute_n_ary(x, i):
     
     r = nan
     
+    # 1. MAX;
+    # 2. MIN;
+    # 3. PROJ. Given a vector, returns the fist component's value.
     if x[i][VALUE] == MAX:
         r = max(t[VALUE] for t in x[:i])
-    
-    # Two other n-ary operators:
-    # 1. MIN, MAX's counterpart
-    if x[i][VALUE] == MIN:
+    elif x[i][VALUE] == MIN:
         r = min(t[VALUE] for t in x[:i])
-    
-    # 2. PROJ. Given a vector, returns the fist component's value.
     elif x[i][VALUE] == PROJ:
         return x[0][VALUE]
+    else:
+        pass
+    
     return r
 
 # 
@@ -186,13 +192,11 @@ def get_computation_method(x):
         the relevant computation method and such index i.
     '''
     
-    len_x = len(x)
-    
     # The default, i.e. the no-operator-found case.
-    c     = compute_zero_ary 
+    c = compute_zero_ary 
     
     # Let us discover the first operator.
-    for i in range(len_x):
+    for i in range(len(x)):
         if x[i][ARITY] is 0:    # i.e not a (nondegenerate) operator.
             continue
         elif x[i][ARITY] is 1:  # Unary operator
@@ -216,9 +220,9 @@ def get_computation_method(x):
     
     # As anounced, returns the computation method and the index i.
     # Remark that the specs of computation_zero_ary force i to be 
-    # len(x) whether all tested x[0][value], x[len(x)-1][value] 
-    # denotes constant(s).
-    return c, i + (i == len_x -1  and x[i][ARITY] is 0)
+    # len(x) if all tested x[0][value], x[len(x)-1][value] 
+    # are constant(s).
+    return c, i + (i == len(x) -1  and x[i][ARITY] is 0)
 
 def compute(expression):
     '''
@@ -234,9 +238,9 @@ def compute(expression):
         # First, we turn the expression into a vector (see above).
         x = list(map(as_dict, expression.split(' ')))
         
-        len_x_initial = len(x)  # no repeated calls of len.
+        len_x_initial = len(x)
         
-        if len_x_initial is 0:  # Not allowed.
+        if len_x_initial is 0:      # Not allowed.
             r = nan
         elif len_x_initial is 1:
                 c, i = get_computation_method(x)

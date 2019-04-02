@@ -14,6 +14,7 @@ from json       import load, dump
 
 from rpn.rpn    import *
 
+
 __author__      = 'gitcordier'
 __copyright__   = 'XXX'
 __credits__     = ['lF']
@@ -42,8 +43,8 @@ class TestCaseRPN(unittest.TestCase):
             calls the solver then so obtain a results R'. Compare 
             returns True if R = R'.If not, it returns False. Our 
             convention about nan is that nan is identified with nan 
-            ('a mistake is a mistake'). So, compare returns True 
-            whether R and R' are nan.
+            ('a mistake is a mistake'). compare then returns True 
+            whether both R and R' are nan.
         '''
         
         u, v, b = compute(ex[E][P]), ex[R], False
@@ -61,7 +62,7 @@ class TestCaseRPN(unittest.TestCase):
         '''
             Our setUp method.
             Loads the correct results (to be comfirmed, then), and 
-            the wrong ones (the ones that must be refused).
+            the wrong ones (the ones that must be refuted).
         '''
         
         self.comfirm_results = []
