@@ -1,0 +1,51 @@
+[
+    {
+        "expression":{
+            "pofix":"1",
+            "infix":"1"
+        },
+        "result":"NaN"
+    },
+    {
+        "expression":{
+            "pofix":"1 2",
+            "infix":"2(1)"
+        },
+        "result":"NaN"
+    },
+    {
+        "expression":{
+            "pofix":"1 2",
+            "infix":"2(1)"
+        },
+        "result":"1"
+    },
+    {
+        "expression":{
+            "pofix":"1 4 SQRT",
+            "infix":"SQRT(4)(1)"
+        },
+        "result":"1"
+    },
+    {
+        "expression":{
+            "pofix":"1 4 SQRT",
+            "infix":"SQRT(4)(1)"
+        },
+        "result":"NaN"
+    },
+    {
+        "expression":{
+            "pofix":"4 SQRT",
+            "infix":"SQRT(4)"
+        },
+        "result":"4"
+    },
+    {
+        "expression":{
+            "pofix":"1 3 1 MAX 4 SQRT",
+            "infix":"SQRT(4)(MAX(1, 3, 1))"
+        },
+        "result":"NaN"
+    }
+]

@@ -1,0 +1,198 @@
+[
+    {
+        "expression":{
+            "pofix":"",
+            "infix":""
+        },
+        "result":"NaN"
+    },
+    {
+        "expression":{
+            "pofix":"1",
+            "infix":"1"
+        },
+        "result":1
+    },
+    {
+        "expression":{
+            "pofix":"2",
+            "infix":"2"
+        },
+        "result":2
+    },
+    {
+        "expression":{
+            "pofix":"2 8 1 PROJ",
+            "infix":"PROJ(1, 8, 2)"
+        },
+        "result":2
+    },
+    {
+        "expression":{
+            "pofix":"4 3 MAX 20 MAX 33 MAX 4 3 MAX 20 MAX MAX 33 MAX 1 MAX",
+            "infix":"MAX(MAX(MAX(MAX(MAX(MAX(MAX(MAX(3, 4), 20), 33), 3, 4), 20)), 33), 1) "
+        },
+        "result":33
+    },
+    {
+        "expression":{
+            "pofix":"4 3 MAX 2 +",
+            "infix":"MAX(4, 3) + 2"
+        },
+        "result":6
+    },
+    {
+        "expression":{
+            "pofix":"3 10 5 + *",
+            "infix":"(10 + 5) * 3"
+        },
+        "result":45
+    },
+    {
+        "expression":{
+            "pofix":"4 2 + 3 -",
+            "infix":"(4 + 2) -3"
+        },
+        "result":3
+    },
+    {
+        "expression":{
+            "pofix":"3 4 1 2 + * +",
+            "infix":"3 + (4 * (1 + 2))"
+        },
+        "result":15
+    },
+    {
+        "expression":{
+            "pofix":"1 2 + 4 * 3 +",
+            "infix":"((1 + 2) * 4) + 3"
+        },
+        "result":15
+    },
+    {
+        "expression":{
+            "pofix":"12 3 - 3 /",
+            "infix":"(12 -3) / 3"
+        },
+        "result":3
+    },
+    {
+        "expression":{
+            "pofix":"5 3 2 * +",
+            "infix":"(3 * 2) + 5"
+        },
+        "result":11
+    },
+    {
+        "expression":{
+            "pofix":"-5 3 2 * +",
+            "infix":"(3 * 2) + (-5)"
+        },
+        "result":1
+    },
+    {
+        "expression":{
+            "pofix":"-5 -3 2 * +",
+            "infix":"(-3 * 2) - 5"
+        },
+        "result":-11
+    },
+    {
+        "expression":{
+            "pofix":"5 2 3 ^ +",
+            "infix":"(2 ** 3) + 5"
+        },
+        "result":13
+    },
+    {
+        "expression":{
+            "pofix":"3 2 * 11 -",
+            "infix":"(3 * 2) - 11"
+        },
+        "result":-5
+    },
+    {
+        "expression":{
+            "pofix":"2 1 12 3 / - +",
+            "infix":"1 - (12 / 3) + 2"
+        },
+        "result":-1
+    },
+    {
+        "expression":{
+            "pofix":"6 3 - 2 ^ 11 -",
+            "infix":" (6 - 3) ** 2 - 11"
+        },
+        "result":-2
+    },
+    {
+        "expression":{
+            "pofix":"6 3 2 ^ - 11 -",
+            "infix":" 6 - 3 ** 2 -11 "
+        },
+        "result":-14
+    },
+    {
+        "expression":{
+            "pofix":"162 2 1 + 4 ^ /",
+            "infix":"162 / ((2 + 1) ** 4)"
+        },
+        "result":2
+    },
+    {
+        "expression":{
+            "pofix":"123",
+            "infix":"123"
+        },
+        "result":123
+    },
+    {
+        "expression":{
+            "pofix":"1 2",
+            "infix":""
+        },
+        "result":2
+    },
+    {
+        "expression":{
+            "pofix":"1 2 3",
+            "infix":"1 2 3"
+        },
+        "result":3
+    },
+    {
+        "expression":{
+            "pofix":"2 SQRT",
+            "infix":""
+        },
+        "result":1.4142135623730951
+    },
+    {
+        "expression":{
+            "pofix":"16 SQRT SQRT",
+            "infix":""
+        },
+        "result":2
+    },
+    {
+        "expression":{
+            "pofix":"4 SQRT 16 SQRT",
+            "infix":""
+        },
+        "result":4
+    },
+    {
+        "expression":{
+            "pofix":"4 SQRT",
+            "infix":"2"
+        },
+        "result":2
+    },
+    {
+        "expression":{
+            "pofix":"0 3 MAX 4 SQRT",
+            "infix":"SQRT(4)(MAX(0, 3))"
+        },
+        "result":2
+    }
+]
