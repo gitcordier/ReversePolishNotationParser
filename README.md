@@ -19,8 +19,7 @@ self-explanatory x[i]['value'].
 ### rpn
 The core package is rpn, which encloses the routine script rpn.py.
 When run, main.py loads rpn.py and eventually displays a famous numerical 
-result, computed from RPN expressions ([further reading here]
-(https://en.wikipedia.org/wiki/Taxicab_number )).
+result, computed from RPN expressions ([further reading here](https://en.wikipedia.org/wiki/Taxicab_number )).
 
 ### test_rpn
 test_rpn encloses test_rpn.py, which is a unittest script.
