@@ -18,9 +18,9 @@ explanatory x[i]['value'].
 ## Package Structure
 ### rpn
 The core package is rpn, which encloses the routines script rpn.py.
-When run, main.py, the second package script loads rpn.py and eventually 
-displays a famous numerical result, computed from RPN expressions (see 
-  https://en.wikipedia.org/wiki/Taxicab_number) for further reading.
+When run, main.py loads rpn.py and eventually displays a famous numerical 
+result, computed from RPN expressions (see 
+https://en.wikipedia.org/wiki/Taxicab_number for further reading).
 
 ### test_rpn
 test_rpn encloses test_rpn.py, which is a unittest script.
@@ -43,16 +43,16 @@ C(a, b, c, …) = C, provided a constant C.
 In terms of RPN, this means that any list of constants '… Z … C B A' reads off
 'A'.
 
-## Code conventions.
+## Code conventions
 We wanted the if, elif pattern to emulate the switch one. So, this is why we 
 wrote if, elif, …, elif, else. We believe that repeatedly writing 'else: pass'
 is worth the clarity benefit: Sticking to this convention makes some room for
 debugging and further improvements.
 
-# TODOS
+## TODOS
 Enrich and organize the input json files. For example, enlist expressions and
-all suitable operand permutations (could be done wit itertools), in order to 
+all suitable operand permutations (could be done with itertools), in order to 
 prove that the parsing is stable under such permutation (e.g ' 1 2 3 + + ' 
-must be proven equivalent to '1 3 2 + +', ' 2 1 3 + + ', and so on).
+must be shown as equivalent to '1 3 2 + +', ' 2 1 3 + + ', and so on).
 
 
