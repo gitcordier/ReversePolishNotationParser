@@ -1,5 +1,4 @@
 # RPN
-![RPN](https://imgs.xkcd.com/comics/rps.png)
 ## What is implemented
 Package rpn encloses an implementation of computation after the RPN (Reverse
 Polish Notation, or 'postfixed notation') norm (
