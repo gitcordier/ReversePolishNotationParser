@@ -37,7 +37,7 @@ miscomputations.
 
 ## About the math
 Let us stress that numbers are indentified with constant (0-ary) operators. 
-This means that whatsoever a, b, c,… are, a(b, c, …) = a.
+This means that A = A(B, C, …) given any list (A, B, C, …) of numbers.
 
 In terms of RPN, this means that any list of constants '… Z … C B A' reads off
 'A'.
