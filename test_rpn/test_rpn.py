@@ -1,18 +1,27 @@
 #!/usr/bin/python3
 
-__author__      = 'Gabriel Cordier'
-__copyright__   = 'Logilab'
-__credits__     = ['Laetitia Fraioli']
-__version__     = '0.0.1'
-__email__       = 'admin@gcordier.eu'
-__status__      = 'Development'
+#coding:utf-8
+
+'''
+    Implements a RPN (Reverse Polish Notation) parser. 
+'''
 
 import math
 import unittest
 
 from itertools  import filterfalse
 from json       import load, dump
+
 from rpn.rpn    import *
+
+__author__      = 'gitcordier'
+__copyright__   = 'XXX'
+__credits__     = ['lF']
+__license__     = 'Nope'
+__version__     = '0.0.1'
+__email__       = ''
+__status__      = 'Prototype'
+
 
 POSTFIX         = 'pofix' #Portemanteau from 'postfix and 'Polish'.
 COMFIRM, REFUTE = 'comfirm', 'refute'
@@ -34,7 +43,7 @@ class TestCaseRPN(unittest.TestCase):
             returns True if R = R'.If not, it returns False. Our 
             convention about nan is that nan is identified with nan 
             ('a mistake is a mistake'). So, compare returns True 
-        whether R and R' are nan.
+            whether R and R' are nan.
         '''
         
         u, v, b = compute(ex[E][P]), ex[R], False
@@ -43,6 +52,9 @@ class TestCaseRPN(unittest.TestCase):
             b = True
         elif u == v:
             b = True
+        else: 
+            pass
+        
         return b
         
     def setUp(self):
@@ -55,15 +67,24 @@ class TestCaseRPN(unittest.TestCase):
         self.comfirm_results = []
         self.refute_results  = []
         
-        with open(INPUTS_COMFIRM, encoding='UTF-8') as c:   
+        with open(INPUTS_COMFIRM, encoding='UTF-8') as c:
             self.comfirm = load(c)
         with open(INPUTS_REFUTE, encoding='UTF-8') as r:
             self.refute = load(r)
-    
+        
     def proof_rpn(self, proof):
         '''
-            hh
+            Implements the testing routine. 
+            If proof is set to 'comfirm', then the comfirmation 
+            process will start: Success means retrieving all 
+            precomputed results. 
+            On the other hand, as proof is 'refute', success means 
+            avoiding all suggested results: 
+            Those results are intentionally wrong. Any match 
+            is then an evidence that the implementation is flawed. 
+            Moreover, it may reveal where the bug is.
         '''
+        
         if proof is COMFIRM:
             data    = self.comfirm 
             results = self.comfirm_results
@@ -79,7 +100,7 @@ class TestCaseRPN(unittest.TestCase):
             '''
                 Given a test result (dictionary-shaped), returns a 
                 string that sum it up (sucess rate is given, so that 
-                we know if our implementation is refused, or not.)
+                we know if our implementation is refuted, or not.)
             '''
             
             def rate():
@@ -89,19 +110,22 @@ class TestCaseRPN(unittest.TestCase):
                 
                 len_data = len(data)
                 
-                if len(dct) is 0: # Which means: No failure.
+                if len(dct) is 0:           # Which means: No failure.
                     r, b = 100, True
-                elif len(dct) is len_data:
+                elif len(dct) is len_data:  # Complete failure.
                     r, b = 0, False
                 else:
-                    r, b = round(100*((len_data-len(dct))/len_data), 2), False
+                    # let s be the success rate, as a percentage.
+                    s = (100 * (len_data-len(dct))) / len_data  
+                    r, b = round(s, 2), False
+                
                 return r, b
                 
             r, b = rate()
             
             return '\n'.join((
                 'Success rate: {} % :'.format(r),
-                'Implementation was {}refuted.'.format('not '*b)))
+                'Implementation was {}refuted.'.format('not ' * b)))
             
         output  = open(OUTPUTS_ERRORS.format(proof), 'w', encoding='UTF-8')
         
@@ -130,14 +154,8 @@ class TestCaseRPN(unittest.TestCase):
         
         return self.proof_rpn(REFUTE)
     
-    def tearDown(self):
-        '''
-            Up to now, does nothing, since all file objects are 
-            already closed.
-        '''
-        pass
-        
 if __name__ == '__main__':
     unittest.main()
 
+# END
 

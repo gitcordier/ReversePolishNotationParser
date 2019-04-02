@@ -1,30 +1,38 @@
 #!/usr/bin/python3
+#coding:utf-8
 
-__author__      = 'Gabriel Cordier'
-__copyright__   = 'Logilab'
-__credits__     = ['Laetitia Fraioli']
-__version__     = '0.0.1'
-__email__       = 'admin@gcordier.eu'
-__status__      = 'Development'
-
+'''
+    Implements a RPN (Reverse Polish Notation) parser. 
+'''
 
 from json   import load
 from math   import sqrt, nan
 from string import ascii_letters, digits
 
-UNDEFINED = ''
-ARITY   = 'arity'
-VALUE   = 'value'
-N       = 'N'
-MAX     = 'MAX'
-MIN     = 'MIN'
-PROJ    = 'PROJ'
-SQRT    = 'SQRT'
+from rpn    import * 
 
-ALPHABET         = digits + ascii_letters + '+-'
-UNARY_OPERATORS  = [SQRT]
-BINARY_OPERATORS = ['+', '-', '*','/', '**', '^']
-N_ARY_OPERATORS  = [MAX, MIN,PROJ]
+__author__      = 'gitcordier'
+__copyright__   = 'XXX'
+__credits__     = ['lF']
+__license__     = 'Nope'
+__version__     = '0.0.1'
+__email__       = ''
+__status__      = 'Prototype'
+
+
+
+ARITY           = 'arity'
+VALUE           = 'value'
+N               = 'N'
+MAX             = 'MAX'
+MIN             = 'MIN'
+PROJ            = 'PROJ'
+SQRT            = 'SQRT'
+ALPHABET        = digits + ascii_letters + '+-'
+UNARY_OPERATORS = [SQRT]
+BINARY_OPERATORS= ['+', '-', '*','/', '**', '^']
+N_ARY_OPERATORS = [MAX, MIN,PROJ]
+UNDEFINED       = ''
 
 def get_arity(s, check=True):
     '''
@@ -272,5 +280,4 @@ def compute(expression):
     return r
 
 # END
-
 
