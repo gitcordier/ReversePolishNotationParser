@@ -38,7 +38,7 @@ miscomputations.
 ## About the math
 Let us stress that constants are indentified with constant (0-ary) operators. 
 This means that whatsoever the parameter(s) b, c, d, … is(are), 
-A(b, c, d, …) = C, provided a constant A.
+A(b, c, d, …) = A, provided a constant A.
 
 In terms of RPN, this means that any list of constants '… Z … C B A' reads off
 'A'.
