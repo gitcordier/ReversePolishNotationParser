@@ -7,7 +7,7 @@
 
 from json   import load
 from math   import sqrt, nan
-from string import ascii_letters, digits
+from string import digits
 
 from rpn    import * 
 
@@ -28,67 +28,63 @@ MAX             = 'MAX'
 MIN             = 'MIN'
 PROJ            = 'PROJ'
 SQRT            = 'SQRT'
-ALPHABET        = digits + ascii_letters + '+-'
+ALPHABET        = digits + '+-'
 UNARY_OPERATORS = [SQRT]
 BINARY_OPERATORS= ['+', '-', '*','/', '**', '^']
 N_ARY_OPERATORS = [MAX, MIN,PROJ]
+OPERATORS       = {
+    1: UNARY_OPERATORS,
+    2: BINARY_OPERATORS,
+    N: N_ARY_OPERATORS
+}
 UNDEFINED       = ''
 
-def get_arity(s, check=True):
-    '''
-        Returns the arity of an operator. 
-        Bear in mind that constant are 0-ary operators.
-        
-        check is an optional boolean that specifies how we look for 
-        unexpected constants i.e constants that are denoted with 
-        symbols other than: digits, ascii lettters, '+', '-'.
-        It defaults to True, which means that any illegal symbol 
-        (e.g '√', ∏, @, %) yields nan.
-    '''
-    
-    if s in BINARY_OPERATORS:
-        arity = 2
-    elif s in N_ARY_OPERATORS:
-        arity = N
-    else:
-        if s in UNARY_OPERATORS:
-            arity = 1
-        
-        # At this point, str(s) then denotes a 0-ary operator, 
-        # i.e a constant…
-        # … Unless str(s) contains an illegal symbol.
-        
-        # If check…
-        elif check:
-            if all(e in ALPHABET for e in str(s)):
-                arity = 0
-            else:
-                arity = nan 
-        
-        # If not (safe when s is necessarily an int,e.g. as a routine 
-        # product).
-        else:
-            arity = 0
-    
-    return arity
-    
-def as_dict(s, check=True):
+def as_dict(number_or_string, check=True):
     '''
         Given a term, as_dict returns a dictionary {arity, value} 
         that captures in a human-readable fashion the so provided 
         information. 
+        
+        check is an optional boolean that specifies how we look for 
+        unexpected symbols i. other than digits, '+', '-'.
+        It defaults to True, which means that any illegal symbol 
+        (e.g '√', ∏, @, %) yields nan.
     '''
     
-    arity = get_arity(s, check)
-    r = {ARITY: arity, VALUE: s}
+    value   = number_or_string
+    arity   = UNDEFINED
+    r ={ARITY: arity, VALUE: value}
     
-    if arity is 0: #i.e it's a constant.
-        r[VALUE] = float(s)
+    for k in OPERATORS:
+        if number_or_string in OPERATORS[k]:
+            r[ARITY] = k
+            return  r
+    if arity is UNDEFINED:
+        # At this point, s then denotes a 0-ary operator, 
+        # i.e.a constant…
+        # … Unless str(s) contains an illegal symbol.
         
-        if r[VALUE] == int(s): 
-            r[VALUE] = int(s)
+        # If check…
+        if check:
+            # TODO
+            if all(e in ALPHABET for e in number_or_string):
+                arity       = 0
+                s_as_float  = float(number_or_string)
+                s_as_int    = int(number_or_string)
+            
+                if s_as_float == s_as_int:
+                     value = s_as_int
+                else:
+                     value = s_as_float
+            
+        # If not (safe when s is necessarily a number, 
+        # e.g. as a routine output).
+        else:
+             arity, value = 0, number_or_string
     
-    return r
+    return {ARITY: arity, VALUE: value}
+    
+    
 
 # From now on, the term vector denotes a list of dictionaries 
 # {arityvalue} (see above).
@@ -102,7 +98,7 @@ def compute_zero_ary(x, i):
         the current function returns x[i-1][value], the i-th value.
         Such specs encompass the following pattern and its 
         iterations: 
-            'a b … z' (as a, b … z are constants): the right operator 
+            'a b … z' (as a, b … z are constants): The right operator 
         is the constant z. The result is then z.
         For instance, 2 2 + 3 3 * = 4 9 = 9.
         
@@ -112,8 +108,9 @@ def compute_zero_ary(x, i):
     
 def compute_unary(x, i):
     '''
-        If x[i] depicts a 1-ary operator T, then T is passed 
-            x[i-1][value].
+        If x[i] depicts a 1-ary operator T, then x[i-1][value] is 
+        passed to T. 
+            .
         The so obtained result is returned. 
         If not, nan is returned.
     '''
@@ -127,7 +124,7 @@ def compute_unary(x, i):
 
 def compute_binary(x, i):
     '''
-        If x[i] (i > 2) depicts a binary operator T (e.g +, *, **), 
+        If x[i] (i > 1) depicts a binary operator T (e.g +, *, **), 
         then x[i-2][value] T x[i-1][value] is returned. 
         Otherwise, nan is returned.
         
@@ -136,8 +133,8 @@ def compute_binary(x, i):
             x[i-2][value] ** x[i-1][value] 
         
         shall be returned.
-        Beware the ordering (by decreasing indexes), 
-        since T may be noncommutative (like **).
+        Beware the ordering (by decreasing indexes), since T may be 
+        noncommutative (like **).
         
     '''
     
@@ -155,7 +152,7 @@ def compute_binary(x, i):
     elif c in ['**', '^']:
         return a ** b
     elif c is '/':
-        r = a/b
+        r = a / b
     else:
         pass
     
@@ -164,8 +161,8 @@ def compute_binary(x, i):
 def compute_n_ary(x, i):
     '''
         If x[i] (i > 0) depicts a n-ary operator (n = 1, 2, 3, …) T, 
-        then T is passed (x[i-1][value], …, x[0][value]). 
-        The so obtained result is returned.
+        then (x[i-1][value], …, x[0][value]) is passed to T. 
+        The so obtained value is returned.
     '''
     
     r = nan
@@ -196,8 +193,10 @@ def get_computation_method(x):
     c = compute_zero_ary 
     
     # Let us discover the first operator.
+    #for i in range(len(x)):
+    
     for i in range(len(x)):
-        if x[i][ARITY] is 0:    # i.e not a (nondegenerate) operator.
+        if x[i][ARITY] is 0:    # i.e.not a (nondegenerate) operator.
             continue
         elif x[i][ARITY] is 1:  # Unary operator
             c = compute_unary
@@ -217,6 +216,7 @@ def get_computation_method(x):
             break
         else:                   # i.e. no chance that it's legal.
             return UNDEFINED, i 
+        return c, i
     
     # As anounced, returns the computation method and the index i.
     # Remark that the specs of computation_zero_ary force i to be 
@@ -261,9 +261,9 @@ def compute(expression):
                     r = nan
                     break
                 
+                # TODO: Explain better what we do with x's slices.
                 # Else, 
-                # First take the extreme left part of the vector x,
-                # which will be parsed later.
+                # First take the extreme left part of the vector x.
                 if i < len(x):
                     y = x[: i-x[i][ARITY]]
                 else:
@@ -278,7 +278,7 @@ def compute(expression):
                 
                 # And so on…
             #
-            # If r was not reset to non, i.e nothing wrong happened:
+            # If r was not reset to non, i.e.nothing wrong happened:
             if r is UNDEFINED:  
                 r = x[0][VALUE] 
     return r
