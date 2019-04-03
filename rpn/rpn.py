@@ -59,29 +59,28 @@ def as_dict(number_or_string, check=True):
         if number_or_string in OPERATORS[k]:
             r[ARITY] = k
             return  r
-    if arity is UNDEFINED:
-        # At this point, s then denotes a 0-ary operator, 
-        # i.e.a constant…
-        # … Unless str(s) contains an illegal symbol.
-        
-        # If check…
-        if check:
-            # TODO
-            if all(e in ALPHABET for e in number_or_string):
-                arity       = 0
-                s_as_float  = float(number_or_string)
-                s_as_int    = int(number_or_string)
-            
-                if s_as_float == s_as_int:
-                     value = s_as_int
-                else:
-                     value = s_as_float
-            
-        # If not (safe when s is necessarily a number, 
-        # e.g. as a routine output).
-        else:
-             arity, value = 0, number_or_string
     
+    # At this point, s then denotes a 0-ary operator, i.e.a constant…
+    # … Unless str(s) contains an illegal symbol.
+        
+    # If check…
+    if check:
+        # TODO
+        if all(e in ALPHABET for e in number_or_string):
+            arity       = 0
+            s_as_float  = float(number_or_string)
+            s_as_int    = int(number_or_string)
+        
+            if s_as_float == s_as_int:
+                 value = s_as_int
+            else:
+                 value = s_as_float
+        
+    # If not (safe when s is necessarily a number, 
+    # e.g. as a routine output).
+    else:
+         arity, value = 0, number_or_string
+
     return {ARITY: arity, VALUE: value}
     
     
