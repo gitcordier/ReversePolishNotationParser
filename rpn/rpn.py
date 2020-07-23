@@ -11,13 +11,9 @@ from string import digits
 
 from rpn    import * 
 
-
 __author__      = 'gitcordier'
-__copyright__   = 'XXX'
-__credits__     = ['lF']
-__license__     = 'Nope'
+__license__     = 'MIT'
 __version__     = '0.0.1'
-__email__       = ''
 __status__      = 'Prototype'
 
 
@@ -283,4 +279,3 @@ def compute(expression):
     return r
 
 # END
-
